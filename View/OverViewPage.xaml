@@ -1,0 +1,147 @@
+﻿<Page x:Class="PokeCollection.View.OverViewPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PokeCollection.View"
+      xmlns:vm="clr-namespace:PokeCollection.ViewModel"
+      xmlns:conv="clr-namespace:PokeCollection.View.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="OverViewPage"
+      Background="#0A285F">
+    <Page.DataContext>
+        <vm:OverViewPageVM/>
+    </Page.DataContext>
+    <Page.Resources>
+        <!-- Converters -->
+        <conv:TypeToCardConverter x:Key="TypeToCard"/>
+        <conv:TypeToIconConverter x:Key="TypeToIcon"/>
+
+        <!-- Text Styles -->
+        <Style x:Key="labelText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style x:Key="nameText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        
+        <!-- Default Images -->
+        <BitmapImage x:Key="defaultCardImage" UriSource="pack://Application:,,,/Resources/Images/Cards/unknown-card.png"/>
+        <BitmapImage x:Key="defaultIconImage" UriSource="pack://Application:,,,/Resources/Images/Icons/unknown-icon.png"/>
+        <BitmapImage x:Key="defaultPokemonImage" UriSource="pack://Application:,,,/Resources/Images/pokemon-silhouette.png"/>
+    </Page.Resources>
+
+    <!-- Main Grid -->
+    <Grid x:Name="mainGrid">
+        <!-- Grid Definitions -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Filters -->
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Text="Filter by type" Style="{StaticResource labelText}"/>
+        <ComboBox Grid.Row="1" Grid.Column="0"
+                  ItemsSource="{Binding PokemonTypes}" SelectedItem="{Binding SelectedType}"/>
+        <TextBlock Grid.Row="0" Grid.Column="1"
+                   Text="Filter by generation" Style="{StaticResource labelText}"/>
+        <ComboBox Grid.Row="1" Grid.Column="1"
+                  ItemsSource="{Binding PokemonGenerations}" SelectedItem="{Binding SelectedGeneration}"/>
+        <TextBlock Grid.Row="0" Grid.Column="2"
+                   Text="Filter by rarity" Style="{StaticResource labelText}"/>
+        <ComboBox Grid.Row="1" Grid.Column="2"
+                  ItemsSource="{Binding PokemonRarities}" SelectedItem="{Binding SelectedRarity}"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="3"
+                   Text="Sort by" Style="{StaticResource labelText}"/>
+        <ComboBox Grid.Row="1"  Grid.Column="3"
+                  ItemsSource="{Binding SortOptions}" SelectedItem="{Binding SelectedSortOption}"/>
+        <TextBlock Grid.Row="0" Grid.Column="4"
+                   Text="Sort order" Style="{StaticResource labelText}"/>
+        <ComboBox Grid.Row="1"  Grid.Column="4"
+                  ItemsSource="{Binding SortOrders}" SelectedItem="{Binding SelectedSortOrder}"/>
+
+        <TextBlock Grid.Row="0" Grid.Column="5"
+                   Text="Switch data" Style="{StaticResource labelText}"/>
+        <Button Grid.Row="1" Grid.Column="5"
+                Command="{Binding SwitchRepositoryCommand}"
+                Content="{Binding CommandText}"/>
+
+        <!-- OverView Grid -->
+        <Grid x:Name="OverViewGrid" Grid.Row="2" Grid.ColumnSpan="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/> <!-- Prev Page -->
+                <ColumnDefinition/>
+                <ColumnDefinition Width="80"/> <!-- Next Page -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Pagination -->
+            <!--
+            <Button Grid.Column="0"
+                    Command="{Binding PrevPageCommand}"
+                    IsEnabled="{Binding CanDoPrevPage}">
+                <TextBlock TextAlignment="Center">PREVIOUS<LineBreak/>PAGE</TextBlock>
+            </Button>
+            <Button Grid.Column="2"
+                    Command="{Binding NextPageCommand}"
+                    IsEnabled="{Binding CanDoNextPage}">
+                <TextBlock TextAlignment="Center">NEXT<LineBreak/>PAGE</TextBlock>
+            </Button>
+            -->
+
+            <!-- Data -->
+            <ListBox Grid.Column="1"
+                     Foreground="White" Background="#D5A100"
+                     ItemsSource="{Binding Pokemons}" SelectedItem="{Binding SelectedPokemon}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Pokemon Card Grid -->
+                        <Grid x:Name="pokemonCardGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <Image Grid.RowSpan="2"
+                               Source="{Binding MainType, Converter={StaticResource TypeToCard}, FallbackValue={StaticResource defaultCardImage}, TargetNullValue={StaticResource defaultCardImage}}"
+                               Width="250" Height="auto" Margin="5"/>
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding Name, FallbackValue=???}" Style="{StaticResource nameText}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Margin="67 17 0 0"/>
+                            <Image Grid.Row="0"
+                                   Source="{Binding MainType, Converter={StaticResource TypeToIcon}, FallbackValue={StaticResource defaultIconImage}, TargetNullValue={StaticResource defaultIconImage}}"
+                                   Width="35" Height="auto"
+                                   HorizontalAlignment="Right" VerticalAlignment="Top"
+                                   Margin="0 15 30 0"/>
+                            <Image Grid.Row="1"
+                                   Source="{Binding MainThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                                   Width="auto" Height="150"
+                                   Margin="0 0 0 25"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</Page>

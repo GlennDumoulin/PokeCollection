@@ -1,0 +1,453 @@
+﻿<Page x:Class="PokeCollection.View.DetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PokeCollection.View"
+      xmlns:vm="clr-namespace:PokeCollection.ViewModel"
+      xmlns:conv="clr-namespace:PokeCollection.View.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DetailPage"
+      Foreground="White"
+      Background="#0A285F">
+    <Page.DataContext>
+        <vm:DetailPageVM/>
+    </Page.DataContext>
+    <Page.Resources>
+        <!-- Converters -->
+        <conv:TypeToIconConverter x:Key="TypeToIcon"/>
+        <conv:TypeToColorConverter x:Key="TypeToColor"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
+
+        <!-- Text Styles -->
+        <Style x:Key="defaultText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style x:Key="labelText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style x:Key="categoryText" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 10 0 5"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <!-- Image Styles -->
+        <Style x:Key="iconImage" TargetType="Image">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="50"/>
+        </Style>
+        <Style x:Key="thumbnailImage" TargetType="Image">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="150"/>
+        </Style>
+        <Style x:Key="smallThumbnailImage" TargetType="Image">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="100"/>
+        </Style>
+        <Style x:Key="evolutionArrow" TargetType="Image">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Source" Value="pack://Application:,,,/Resources/Images/evolution-arrow.png"/>
+        </Style>
+
+        <!-- Other Styles -->
+        <Style x:Key="verticalPanel" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="horizontalPanel" TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="unselectableListBox" TargetType="ListBox">
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style x:Key="horizontalSeparator" TargetType="Rectangle">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="Height" Value="2"/>
+            <Setter Property="Margin" Value="10 0"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Fill" Value="#0A285F"/>
+        </Style>
+        <Style x:Key="verticalSeparator" TargetType="Rectangle">
+            <Setter Property="Width" Value="2"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Margin" Value="10 0"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Fill" Value="#0A285F"/>
+        </Style>
+        
+        <!-- Default Images -->
+        <BitmapImage x:Key="defaultCardImage" UriSource="pack://Application:,,,/Resources/Images/Cards/unknown-card.png"/>
+        <BitmapImage x:Key="defaultIconImage" UriSource="pack://Application:,,,/Resources/Images/Icons/unknown-icon.png"/>
+        <BitmapImage x:Key="defaultPokemonImage" UriSource="pack://Application:,,,/Resources/Images/pokemon-silhouette.png"/>
+    </Page.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <!-- Main Grid -->
+        <Grid x:Name="mainGrid">
+            <!-- Main Grid Definitions -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Thumbnail and Main Info -->
+            <Grid Grid.Row="0" Grid.Column="0"
+                  x:Name="thumbnailGrid"
+                  Background="{Binding CurrentPokemon.MainType, Converter={StaticResource TypeToColor}, FallbackValue=#4b4b4b}">
+                <Image Source="{Binding CurrentPokemon.MainThumbnailUrl}"
+                       Style="{StaticResource thumbnailImage}"
+                       Height="250"/>
+            </Grid>
+            <Grid x:Name="mainInfoGrid"
+                  Grid.Row="0" Grid.Column="1"
+                  Background="#D5A100">
+                <!-- Grid Definitions -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Name -->
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2"
+                           Text="{Binding CurrentPokemon.Name}"
+                           FontSize="32"
+                           FontWeight="SemiBold"
+                           Padding="10" Margin="5 0"/>
+                <Rectangle Grid.Row="0" Grid.ColumnSpan="2"
+                           Style="{StaticResource horizontalSeparator}"/>
+                
+                <!-- Table Lines -->
+                <Rectangle Grid.Row="1" Grid.Column="0"
+                           Grid.RowSpan="3"
+                           Style="{StaticResource verticalSeparator}"
+                           HorizontalAlignment="Left"/>
+                <Rectangle Grid.Row="1" Grid.Column="0"
+                           Style="{StaticResource verticalSeparator}"
+                           Margin="0"/>
+                <Rectangle Grid.Row="1" Grid.Column="1"
+                           Grid.RowSpan="3"
+                           Style="{StaticResource verticalSeparator}"/>
+                
+                <!-- Basic Info -->
+                <StackPanel Grid.Row="1" Grid.Column="0"
+                            Style="{StaticResource horizontalPanel}">
+                    <TextBlock Text="ID: "
+                               Style="{StaticResource labelText}"
+                               Padding="10 0 0 0"/>
+                    <TextBlock Text="{Binding CurrentPokemon.Id}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                            Style="{StaticResource horizontalPanel}">
+                    <TextBlock Text="Generation: "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.Generation.Name}"
+                               Style="{StaticResource defaultText}"
+                               Padding="0 0 10 0"/>
+                </StackPanel>
+                <Rectangle Grid.Row="1" Grid.ColumnSpan="2"
+                           Style="{StaticResource horizontalSeparator}"/>
+                
+                <!-- Types -->
+                <ListBox Grid.Row="2" Grid.ColumnSpan="2"
+                         ItemsSource="{Binding CurrentPokemon.Varieties[0].Types}"
+                         Style="{StaticResource unselectableListBox}"
+                         Margin="5">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Style="{StaticResource verticalPanel}">
+                                <Image Source="{Binding Info.Name, Converter={StaticResource TypeToIcon}}"
+                                       Style="{StaticResource iconImage}"/>
+                                <TextBlock Text="{Binding Info.Name}"
+                                           Style="{StaticResource defaultText}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Rectangle Grid.Row="2" Grid.ColumnSpan="2"
+                           Style="{StaticResource horizontalSeparator}"/>
+                
+                <!-- Rarity -->
+                <StackPanel Grid.Row="3" Grid.ColumnSpan="2"
+                            Style="{StaticResource horizontalPanel}">
+                    <TextBlock Text="Rarity: "
+                               Style="{StaticResource labelText}"
+                               Padding="10 0 0 0"/>
+                    <TextBlock Text="Regular"
+                               Style="{StaticResource defaultText}"
+                               Margin="10 0"
+                               Visibility="{Binding CurrentPokemon.IsRegular, Converter={StaticResource BoolToVisibility}}"/>
+                    <TextBlock Text="Baby"
+                               Style="{StaticResource defaultText}"
+                               Margin="10 0"
+                               Visibility="{Binding CurrentPokemon.IsBaby, Converter={StaticResource BoolToVisibility}}"/>
+                    <TextBlock Text="Legendary"
+                               Style="{StaticResource defaultText}"
+                               Margin="10 0"
+                               Visibility="{Binding CurrentPokemon.IsLegendary, Converter={StaticResource BoolToVisibility}}"/>
+                    <TextBlock Text="Mythical"
+                               Style="{StaticResource defaultText}"
+                               Margin="10 0"
+                               Visibility="{Binding CurrentPokemon.IsMythical, Converter={StaticResource BoolToVisibility}}"/>
+                </StackPanel>
+                <Rectangle Grid.Row="3" Grid.ColumnSpan="2"
+                           Style="{StaticResource horizontalSeparator}"/>
+            </Grid>
+
+            <!-- Stats -->
+            <Grid Grid.Row="1" Grid.ColumnSpan="2"
+                  x:Name="statsGrid"
+                  Margin="50 0">
+                <!-- Stats Grid Definitions -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="3"
+                           Text="Stats"
+                           Style="{StaticResource categoryText}"/>
+                <StackPanel Grid.Row="1" Grid.Column="0"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[0].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[0].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[1].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[1].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="2"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[2].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[2].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[3].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[3].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="2"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[4].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[4].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="0"
+                            Style="{StaticResource horizontalPanel}"
+                            HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[5].Info.Name}"
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text=": "
+                               Style="{StaticResource labelText}"/>
+                    <TextBlock Text="{Binding CurrentPokemon.MainStats[5].Value}"
+                               Style="{StaticResource defaultText}"/>
+                </StackPanel>
+            </Grid>
+            
+            <!-- Evolution Chain -->
+            <Grid Grid.Row="2" Grid.ColumnSpan="2"
+                  x:Name="evolutionChainGrid"
+                  Background="#D5A100">
+                <!-- Evolution Chain Grid Definitions -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0"
+                           Text="Evolution Chain"
+                           Style="{StaticResource categoryText}"/>
+                <Grid Grid.Row="1"
+                      x:Name="evolutionSpeciesGrid"
+                      HorizontalAlignment="Center">
+                    <!-- Evolution Species Grid Definitions -->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Base Pokemon -->
+                    <StackPanel Grid.Column="0"
+                                Style="{StaticResource verticalPanel}">
+                        <Image Source="{Binding EvolutionChain.Base.Info.ThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                               Style="{StaticResource smallThumbnailImage}"/>
+                        <TextBlock Text="{Binding EvolutionChain.Base.Info.Name}"
+                                   Style="{StaticResource defaultText}"
+                                   Margin="0 5 0 0"/>
+                    </StackPanel>
+                    <!-- 1st Evolutions -->
+                    <ListBox Grid.Column="1"
+                             ItemsSource="{Binding EvolutionChain.Base.Evolutions}"
+                             Style="{StaticResource unselectableListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Style="{StaticResource horizontalPanel}">
+                                    <Image Style="{StaticResource evolutionArrow}"/>
+                                    <StackPanel Style="{StaticResource verticalPanel}">
+                                        <Image Source="{Binding Info.ThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                                               Style="{StaticResource smallThumbnailImage}"/>
+                                        <TextBlock Text="{Binding Info.Name}"
+                                                   Style="{StaticResource defaultText}"
+                                                   Margin="0 5 0 0"/>
+                                    </StackPanel>
+                                    <!-- 2nd Evolutions -->
+                                    <ListBox Grid.Column="2"
+                                             ItemsSource="{Binding Evolutions}"
+                                             Style="{StaticResource unselectableListBox}">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Vertical"/>
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Style="{StaticResource horizontalPanel}">
+                                                    <Image Style="{StaticResource evolutionArrow}"/>
+                                                    <StackPanel Style="{StaticResource verticalPanel}">
+                                                        <Image Source="{Binding Info.ThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                                                               Style="{StaticResource smallThumbnailImage}"/>
+                                                        <TextBlock Text="{Binding Info.Name}"
+                                                                   Style="{StaticResource defaultText}"
+                                                                   Margin="0 5 0 0"/>
+                                                    </StackPanel>
+                                                    <!-- 3rd Evolutions -->
+                                                    <ListBox Grid.Column="3"
+                                                             ItemsSource="{Binding Evolutions}"
+                                                             Style="{StaticResource unselectableListBox}">
+                                                        <ListBox.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <WrapPanel Orientation="Vertical"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ListBox.ItemsPanel>
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <StackPanel Style="{StaticResource horizontalPanel}">
+                                                                    <Image Style="{StaticResource evolutionArrow}"/>
+                                                                    <StackPanel Style="{StaticResource verticalPanel}">
+                                                                        <Image Source="{Binding Info.ThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                                                                               Style="{StaticResource smallThumbnailImage}"/>
+                                                                        <TextBlock Text="{Binding Info.Name}"
+                                                                                   Style="{StaticResource defaultText}"
+                                                                                   Margin="0 5 0 0"/>
+                                                                    </StackPanel>
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Grid>
+
+            <!-- Varieties -->
+            <Grid Grid.Row="3" Grid.ColumnSpan="2"
+                  x:Name="varietiesGrid"
+                  Margin="20 10">
+                <StackPanel Style="{StaticResource verticalPanel}">
+                    <TextBlock Text="Varieties"
+                               Style="{StaticResource categoryText}"/>
+                    <ListBox ItemsSource="{Binding CurrentPokemon.Varieties}"
+                             Style="{StaticResource unselectableListBox}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Style="{StaticResource verticalPanel}">
+                                    <Image Source="{Binding ThumbnailUrl, FallbackValue={StaticResource defaultPokemonImage}, TargetNullValue={StaticResource defaultPokemonImage}}"
+                                           Style="{StaticResource thumbnailImage}"/>
+                                    <TextBlock Text="{Binding VarietyName}"
+                                               Style="{StaticResource defaultText}"
+                                               Margin="0 5 0 0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>

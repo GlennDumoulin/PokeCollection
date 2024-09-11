@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{350BC9AA-DCFD-421B-8698-C09159755D63}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PokeCollection</RootNamespace>
+    <AssemblyName>PokeCollection</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommunityToolkit.Mvvm, Version=8.1.0.0, Culture=neutral, PublicKeyToken=4aff67a105548ee2, processorArchitecture=MSIL">
+      <HintPath>packages\CommunityToolkit.Mvvm.8.1.0\lib\netstandard2.0\CommunityToolkit.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Model\EvolutionChain.cs" />
+    <Compile Include="Model\IPokemonRepository.cs" />
+    <Compile Include="Model\PokemonVariety.cs" />
+    <Compile Include="Model\PokemonGeneration.cs" />
+    <Compile Include="Model\PokemonSpecies.cs" />
+    <Compile Include="Model\PokemonSprites.cs" />
+    <Compile Include="Model\PokemonStatistic.cs" />
+    <Compile Include="Model\PokemonType.cs" />
+    <Compile Include="Repository\PokemonApiRepository.cs" />
+    <Compile Include="Repository\PokemonLocalRepository.cs" />
+    <Compile Include="ViewModel\DetailPageVM.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\OverViewPageVM.cs" />
+    <Compile Include="View\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="View\Converters\TypeToCardConverter.cs" />
+    <Compile Include="View\Converters\TypeToColorConverter.cs" />
+    <Compile Include="View\Converters\TypeToIconConverter.cs" />
+    <Compile Include="View\DetailPage.xaml.cs">
+      <DependentUpon>DetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OverViewPage.xaml.cs">
+      <DependentUpon>OverViewPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="View\DetailPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OverViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Resources\Data\pokemon-species.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\bulbasaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\ivysaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\venusaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\charmander.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\charmeleon.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\charizard.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\squirtle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\wartortle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\blastoise.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\caterpie.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\metapod.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\butterfree.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\weedle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\kakuna.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\beedrill.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\pidgey.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\pidgeotto.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\pidgeot.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\rattata.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\raticate.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\spearow.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\fearow.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\ekans.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\arbok.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\pikachu.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\raichu.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\arbok.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\beedrill.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\blastoise.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\bulbasaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\butterfree.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\caterpie.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charizard.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charmander.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charmeleon.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\ekans.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\fearow.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\ivysaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\kakuna.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\metapod.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pidgeot.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pidgeotto.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pidgey.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\raichu.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\raticate.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\rattata.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\spearow.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\squirtle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\venusaur.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\wartortle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\weedle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\venusaur-gmax.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\venusaur-mega.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charizard-gmax.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charizard-mega-x.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\charizard-mega-y.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\blastoise-gmax.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\blastoise-mega.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\beedrill-mega.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\butterfree-gmax.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pidgeot-mega.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\raticate-alola.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\raticate-totem-alola.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\rattata-alola.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\raichu-alola.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-alola-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-belle.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-cosplay.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-gmax.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-hoenn-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-kalos-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-libre.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-original-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-partner-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-phd.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-pop-star.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-rock-star.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-sinnoh-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-starter.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-unova-cap.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pikachu-world-cap.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\1.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\2.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\3.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\4.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\5.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\6.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\7.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\8.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\9.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon-species\pichu.json" />
+    <EmbeddedResource Include="Resources\Data\pokemon\pichu.json" />
+    <EmbeddedResource Include="Resources\Data\evolution-chain\10.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\pokemon-silhouette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Cards\bug-card.png" />
+    <Resource Include="Resources\Images\Cards\dark-card.png" />
+    <Resource Include="Resources\Images\Cards\dragon-card.png" />
+    <Resource Include="Resources\Images\Cards\electric-card.png" />
+    <Resource Include="Resources\Images\Cards\fairy-card.png" />
+    <Resource Include="Resources\Images\Cards\fighting-card.png" />
+    <Resource Include="Resources\Images\Cards\fire-card.png" />
+    <Resource Include="Resources\Images\Cards\flying-card.png" />
+    <Resource Include="Resources\Images\Cards\ghost-card.png" />
+    <Resource Include="Resources\Images\Cards\grass-card.png" />
+    <Resource Include="Resources\Images\Cards\ground-card.png" />
+    <Resource Include="Resources\Images\Cards\ice-card.png" />
+    <Resource Include="Resources\Images\Cards\normal-card.png" />
+    <Resource Include="Resources\Images\Cards\poison-card.png" />
+    <Resource Include="Resources\Images\Cards\psychic-card.png" />
+    <Resource Include="Resources\Images\Cards\rock-card.png" />
+    <Resource Include="Resources\Images\Cards\shadow-card.png" />
+    <Resource Include="Resources\Images\Cards\steel-card.png" />
+    <Resource Include="Resources\Images\Cards\unknown-card.png" />
+    <Resource Include="Resources\Images\Cards\water-card.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\bug-icon.png" />
+    <Resource Include="Resources\Images\Icons\dark-icon.png" />
+    <Resource Include="Resources\Images\Icons\dragon-icon.png" />
+    <Resource Include="Resources\Images\Icons\electric-icon.png" />
+    <Resource Include="Resources\Images\Icons\fairy-icon.png" />
+    <Resource Include="Resources\Images\Icons\fighting-icon.png" />
+    <Resource Include="Resources\Images\Icons\fire-icon.png" />
+    <Resource Include="Resources\Images\Icons\flying-icon.png" />
+    <Resource Include="Resources\Images\Icons\ghost-icon.png" />
+    <Resource Include="Resources\Images\Icons\grass-icon.png" />
+    <Resource Include="Resources\Images\Icons\ground-icon.png" />
+    <Resource Include="Resources\Images\Icons\ice-icon.png" />
+    <Resource Include="Resources\Images\Icons\normal-icon.png" />
+    <Resource Include="Resources\Images\Icons\poison-icon.png" />
+    <Resource Include="Resources\Images\Icons\psychic-icon.png" />
+    <Resource Include="Resources\Images\Icons\rock-icon.png" />
+    <Resource Include="Resources\Images\Icons\steel-icon.png" />
+    <Resource Include="Resources\Images\Icons\water-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\unknown-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\evolution-arrow.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets'))" />
+  </Target>
+</Project>

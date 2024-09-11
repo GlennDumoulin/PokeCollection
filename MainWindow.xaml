@@ -1,0 +1,30 @@
+﻿<Window x:Class="PokeCollection.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PokeCollection"
+        xmlns:vm="clr-namespace:PokeCollection.ViewModel"
+        mc:Ignorable="d"
+        Title="PokeCollection" WindowState="Maximized"
+        Width="1200" Height="678"
+        MinWidth="738" MinHeight="420"
+        Background="Black">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        
+        <Frame Grid.Row="0"
+               NavigationUIVisibility="Hidden"
+               Content="{Binding CurrentPage}"/>
+        <Button Grid.Row="1"
+                Command="{Binding SwitchPageCommand}"
+                Content="{Binding CommandText}"/>
+    </Grid>
+</Window>
