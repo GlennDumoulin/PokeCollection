@@ -15,7 +15,7 @@ namespace PokeCollection.Repository
 {
     public class PokemonApiRepository : IPokemonRepository
     {
-        private static int NrOfPokemonsToLoad { get; } = 50;
+        private static int NrOfPokemonsToLoad { get; } = int.MaxValue/*50*/;
         private static int StartLoadingAtIdx { get; } = 0;
 
         //Collections data

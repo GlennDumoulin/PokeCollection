@@ -169,7 +169,7 @@ namespace PokeCollection.ViewModel
         {
             FilterPokemons();
             SortPokemons();
-            PaginatePokemons();
+            //PaginatePokemons();
             OnPropertyChanged(nameof(Pokemons));
         }
 
